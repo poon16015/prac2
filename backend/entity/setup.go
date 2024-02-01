@@ -11,14 +11,20 @@ func DB() *gorm.DB {
 	return db
 }
 
-func SetupDatabase() {
-
-	database, err := gorm.Open(sqlite.Open("prac2"), &gorm.Config{})
+func ConnectDB() (*gorm.DB, error) {
+	var err error
+	var database *gorm.DB
+	database, err = gorm.Open(sqlite.Open("prac2.db"), &gorm.Config{})
 	if err != nil {
 		panic("failed to connect database")
 	}
-	// Migrate the schema
-	database.AutoMigrate(&User{})
-	db = database
 
+	database.AutoMigrate(
+		&User{},
+	)
+
+	// SetUp Gender
+	
+
+	return database, nil
 }
